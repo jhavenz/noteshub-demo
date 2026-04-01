@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NotesHub</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="./app.css">
+  <script src="/sse.js"></script>
+  <script src="/app.js"></script>
+</head>
+<body>
+
+  <div x-data="notesApp" x-sse="/notes/stream">
+    <div class="app-bar">
+      <h1>NotesHub</h1>
+      <sl-badge x-show="sseStatus === 'connected'" variant="success" pill>Live</sl-badge>
+      <sl-badge x-show="sseStatus === 'reconnecting'" variant="warning" pill>Reconnecting</sl-badge>
+      <sl-badge x-show="sseStatus === 'disconnected'" variant="danger" pill>Offline</sl-badge>
+    </div>
+
+    <div class="container">
+      <div class="compose">
+        <div class="compose-label">New Note</div>
+        <sl-input x-ref="composeTitle" label="Title" placeholder="Title"></sl-input>
+        <sl-textarea x-ref="composeBody" label="Body" placeholder="Body" rows="3" resize="auto"></sl-textarea>
+        <sl-button variant="primary" :loading="composeBusy" @click="createNote">Add Note</sl-button>
+      </div>
+
+      <template x-if="notes.length === 0">
+        <div class="empty">No notes yet. Create one above.</div>
+      </template>
+
+      <template x-for="note in notes" :key="note.id">
+        <div class="note" :id="'note-' + note.id">
+
+          <template x-if="editingId === note.id">
+            <div class="edit-form">
+              <sl-input x-ref="editTitle" :value="note.title" label="Title"></sl-input>
+              <sl-textarea x-ref="editBody" :value="note.body" label="Body" rows="3" resize="auto"></sl-textarea>
+              <div class="edit-actions">
+                <sl-button variant="primary" :loading="editBusy" @click="saveEdit(note.id)">Save</sl-button>
+                <sl-button variant="default" @click="editingId = null">Cancel</sl-button>
+              </div>
+            </div>
+          </template>
+
+          <template x-if="editingId !== note.id">
+            <div>
+              <div class="note-header">
+                <span class="note-title" @click="editingId = note.id" x-text="note.title"></span>
+                <sl-button variant="danger" size="small" outline @click="removeNote(note.id)">Delete</sl-button>
+              </div>
+              <div class="note-body" x-show="note.body" x-text="note.body"></div>
+              <div class="note-meta">
+                <span x-text="'#' + note.id + ' · updated ' + formatTs(note.updated_at)"></span>
+              </div>
+              <div class="note-related" x-show="(related[note.id] || []).length > 0">
+                <span class="note-related-label">Related</span>
+                <template x-for="rel in (related[note.id] || [])" :key="rel.id">
+                  <sl-tag size="small" variant="neutral" x-text="rel.title"></sl-tag>
+                </template>
+              </div>
+            </div>
+          </template>
+
+        </div>
+      </template>
+    </div>
+  </div>
+
+</body>
+</html>

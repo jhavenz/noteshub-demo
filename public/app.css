@@ -1,0 +1,113 @@
+body {
+    font-family: system-ui, sans-serif;
+    margin: 0;
+    background: #f4f5f7;
+}
+.app-bar {
+    background: #1e293b;
+    color: #fff;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.app-bar h1 {
+    font-size: 18px;
+    font-weight: 600;
+    flex: 1;
+    margin: 0;
+}
+.container {
+    max-width: 660px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
+.compose {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.compose-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #64748b;
+    margin-bottom: 10px;
+}
+.compose sl-input,
+.compose sl-textarea {
+    margin-bottom: 10px;
+}
+.note {
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    transition: background 0.4s;
+}
+.note.flash-add {
+    background: #eff6ff;
+}
+.note.flash-update {
+    background: #fefce8;
+}
+.note.flash-related {
+    background: #f0fdf4;
+}
+.note-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+.note-title {
+    font-size: 15px;
+    font-weight: 600;
+    flex: 1;
+    cursor: pointer;
+}
+.note-title:hover {
+    color: var(--sl-color-primary-600);
+}
+.note-body {
+    font-family: monospace;
+    font-size: 13px;
+    color: #64748b;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin-bottom: 6px;
+}
+.note-meta {
+    font-size: 11px;
+    color: #94a3b8;
+}
+.note-related {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 8px;
+}
+.note-related-label {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 600;
+}
+.edit-form sl-input,
+.edit-form sl-textarea {
+    margin-bottom: 8px;
+}
+.edit-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+.empty {
+    text-align: center;
+    padding: 40px 0;
+    color: #94a3b8;
+}
