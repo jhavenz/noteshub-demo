@@ -1,2 +1,22 @@
-/vendor/
+# Default deny: all hidden files/dirs and markdown
+.*
+*.md
+
+# Explicit includes
+!.gitignore
+!.env.example
+!README.md
+
+# Dependencies
+vendor/
+node_modules/
+
+# Build artifacts
+build/
+dist/
+coverage/
+
+# Logs
+*.log
+
 composer.lock
